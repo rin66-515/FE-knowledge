@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCardStore } from '@/store/useCardStore';
 import { 
   shouldReduceMotion, 
   isLowEndDevice,
@@ -10,6 +11,7 @@ import {
 
 // 响应式图形组件，优化首次加载性能，带有骨架屏和渐进式渲染
 export default function GraphView() {
+  const locale = useCardStore(s => s.locale);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -244,10 +246,29 @@ export default function GraphView() {
     }
   }, [isLoaded, dimensions, isRendering, animateRender]);
 
+  // 三语文本
+  const title = {
+    zh: '知识图谱',
+    ja: 'ナレッジグラフ',
+    en: 'Knowledge Graph'
+  }[locale];
+
+  const loading = {
+    zh: '准备可视化...',
+    ja: '可視化を準備中...',
+    en: 'Preparing visualization...'
+  }[locale];
+
+  const description = {
+    zh: '交互式知识图谱可视化，适配所有设备',
+    ja: 'インタラクティブなナレッジグラフ、すべてのデバイスに最適化',
+    en: 'Interactive knowledge graph visualization. Optimized for all devices.'
+  }[locale];
+
   return (
     <div className="card fade-in">
       <div className="text-lg font-semibold mb-4 text-center sm:text-left responsive-text">
-        Knowledge Graph
+        {title}
       </div>
       
       <div 
@@ -282,7 +303,7 @@ export default function GraphView() {
             {/* 加载提示 */}
             <div className="flex items-center space-x-2 text-slate-400 z-10">
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-brand-500"></div>
-              <span className="text-sm">Preparing visualization...</span>
+              <span className="text-sm">{loading}</span>
             </div>
           </div>
         )}
@@ -312,7 +333,7 @@ export default function GraphView() {
       </div>
       
       <p className="text-slate-400 mt-3 text-sm text-center sm:text-left responsive-text">
-        Interactive knowledge graph visualization. Optimized for all devices.
+        {description}
       </p>
     </div>
   );

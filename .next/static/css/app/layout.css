@@ -762,6 +762,9 @@ video {
 .gap-2 {
   gap: 0.5rem;
 }
+.gap-3 {
+  gap: 0.75rem;
+}
 .gap-4 {
   gap: 1rem;
 }
@@ -1041,6 +1044,11 @@ video {
 }
 .transition-all {
   transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -1325,7 +1333,8 @@ a:hover {
 .card-flip-container {
   position: relative;
   width: 100%;
-  min-height: 280px;
+  min-height: 320px;
+  margin-bottom: 1rem;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
@@ -1333,7 +1342,7 @@ a:hover {
 .card-flip-inner {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 320px;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
@@ -1352,6 +1361,7 @@ a:hover {
 .card-flip-face {
   position: absolute;
   width: 100%;
+  min-height: 320px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
@@ -1592,19 +1602,7 @@ a:hover {
   background-color: rgb(71 85 105 / 0.5);
 }
 
-/* 收藏星标动画 */
-@keyframes bounceSubtle {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
-.animate-bounce-subtle {
-  animation: bounceSubtle 2s ease-in-out infinite;
-}
+/* 收藏星标样式 */
 
 /* 卡片内容区域 */
 .card-content {
@@ -1652,7 +1650,16 @@ a:hover {
 /* 响应式优化 */
 @media (max-width: 768px) {
   .card-flip-container {
-    min-height: 320px;
+    min-height: 360px;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-flip-inner {
+    min-height: 360px;
+  }
+
+  .card-flip-face {
+    min-height: 360px;
   }
   
   .card-content {
@@ -1794,7 +1801,22 @@ a:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
+.hover\:text-brand-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(91 186 255 / var(--tw-text-opacity));
+}
+.hover\:opacity-80:hover {
+  opacity: 0.8;
+}
 @media (min-width: 640px) {
+
+  .sm\:inline {
+    display: inline;
+  }
+
+  .sm\:hidden {
+    display: none;
+  }
 
   .sm\:flex-row {
     flex-direction: row;
@@ -1804,11 +1826,24 @@ a:hover {
     align-items: center;
   }
 
+  .sm\:gap-4 {
+    gap: 1rem;
+  }
+
   .sm\:text-left {
     text-align: left;
   }
+
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
 }
 @media (min-width: 768px) {
+
+  .md\:inline {
+    display: inline;
+  }
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
