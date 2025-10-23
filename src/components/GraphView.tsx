@@ -266,7 +266,7 @@ export default function GraphView() {
   }[locale];
 
   return (
-    <div className="card fade-in">
+    <div className="card">
       <div className="text-lg font-semibold mb-4 text-center sm:text-left responsive-text">
         {title}
       </div>

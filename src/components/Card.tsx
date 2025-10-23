@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useCardStore } from '@/store/useCardStore';
 import type { Card } from '@/types/card';
 
 export default function CardView({ card, index = 0 }: { card: Card; index?: number }) {
   const [flipped, setFlipped] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   
   const locale = useCardStore(s => s.locale);
@@ -17,28 +16,6 @@ export default function CardView({ card, index = 0 }: { card: Card; index?: numb
 
   const loc = card[locale];
   const fav = favorites.has(card.id);
-
-  // 可见性检测 - 缓加载效果
-  useEffect(() => {
-    if (!cardRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isVisible) {
-            // 延迟显示，创建交错动画效果
-            setTimeout(() => {
-              setIsVisible(true);
-            }, index * 80); // 每个卡片延迟80ms
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    );
-
-    observer.observe(cardRef.current);
-    return () => observer.disconnect();
-  }, [index, isVisible]);
 
   // 翻转处理
   const handleFlip = () => {
@@ -98,9 +75,8 @@ export default function CardView({ card, index = 0 }: { card: Card; index?: numb
   return (
     <div 
       ref={cardRef}
-      className={`card-flip-container ${isVisible ? 'card-visible' : 'card-hidden'}`}
+      className="card-flip-container"
       style={{ 
-        animationDelay: `${index * 80}ms`,
         perspective: '1000px',
       }}
     >

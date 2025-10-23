@@ -97,7 +97,7 @@ export default function CardsPage() {
 
   return (
     <div className="grid gap-6">
-      <div className="fade-in">
+      <div>
         <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-400 to-brand-300 bg-clip-text text-transparent">
           {title}
         </h1>
@@ -108,7 +108,7 @@ export default function CardsPage() {
 
       {/* 统计信息 */}
       {!loading && cards.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 fade-in">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="card text-center">
             <div className="text-3xl font-bold text-brand-400">{cards.length}</div>
             <div className="text-sm text-slate-400 mt-1">{totalCardsLabel}</div>
