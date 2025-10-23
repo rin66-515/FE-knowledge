@@ -29,7 +29,9 @@ export const preloadCriticalResources = () => {
   dataPreload.crossOrigin = 'anonymous';
   document.head.appendChild(dataPreload);
 
-  console.log('🚀 Critical resources preloaded');
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🚀 Critical resources preloaded');
+  }
 };
 
 // 懒加载图片
@@ -74,7 +76,9 @@ export const lazyLoadImages = () => {
     imageObserver.observe(img);
   });
   
-  console.log('🖼️ Image lazy loading initialized');
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🖼️ Image lazy loading initialized');
+  }
 };
 
 // 预加载下一页内容

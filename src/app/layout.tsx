@@ -1,8 +1,14 @@
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
-import PerformanceMonitor from '@/components/PerformanceMonitor';
+import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { rehydrateLocal } from '@/store/useCardStore';
+
+// 延迟加载性能监控组件，不阻塞首屏渲染
+const PerformanceMonitor = dynamic(() => import('@/components/PerformanceMonitor'), {
+  ssr: false,
+  loading: () => null
+});
 
 export const metadata = {
   title: 'ナレッジカード - Knowledge Cards',

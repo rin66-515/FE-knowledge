@@ -1,1 +1,26 @@
-{}
+{
+  "app\\cards\\page.tsx -> @/components/Card": {
+    "id": "app\\cards\\page.tsx -> @/components/Card",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_Card_tsx.js"
+    ]
+  },
+  "app\\review\\page.tsx -> @/components/Card": {
+    "id": "app\\review\\page.tsx -> @/components/Card",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_Card_tsx.js"
+    ]
+  },
+  "app\\review\\page.tsx -> @/components/ReviewStats": {
+    "id": "app\\review\\page.tsx -> @/components/ReviewStats",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ReviewStats_tsx.js"
+    ]
+  },
+  "components\\Navbar.tsx -> ./LanguageSwitcher": {
+    "id": "components\\Navbar.tsx -> ./LanguageSwitcher",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_LanguageSwitcher_tsx.js"
+    ]
+  }
+}

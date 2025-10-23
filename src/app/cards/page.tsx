@@ -1,9 +1,29 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { loadAllCards } from '@/lib/dataLoader';
-import CardView from '@/components/Card';
 import { useCardStore } from '@/store/useCardStore';
+
+// 动态导入卡片组件，优化首屏加载
+const CardView = dynamic(() => import('@/components/Card'), {
+  loading: () => (
+    <div className="card-skeleton">
+      <div className="card-skeleton-header"></div>
+      <div className="card-skeleton-title"></div>
+      <div className="card-skeleton-content">
+        <div className="card-skeleton-line"></div>
+        <div className="card-skeleton-line"></div>
+        <div className="card-skeleton-line"></div>
+      </div>
+      <div className="card-skeleton-buttons">
+        <div className="card-skeleton-button"></div>
+        <div className="card-skeleton-button"></div>
+      </div>
+    </div>
+  ),
+  ssr: false
+});
 
 // 卡片骨架屏组件
 function CardSkeleton({ index }: { index: number }) {

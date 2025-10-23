@@ -1,8 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { LanguageSwitcher } from './LanguageSwitcher';
+import dynamic from 'next/dynamic';
 import { useCardStore } from '@/store/useCardStore';
+
+// 延迟加载语言切换器，不阻塞首屏
+const LanguageSwitcher = dynamic(() => import('./LanguageSwitcher').then(mod => ({ default: mod.LanguageSwitcher })), {
+  loading: () => <div className="w-20 h-8 bg-slate-800 rounded animate-pulse"></div>,
+  ssr: false
+});
 
 export default function Navbar() {
   const locale = useCardStore(s => s.locale);

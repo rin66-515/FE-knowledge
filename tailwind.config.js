@@ -22,5 +22,21 @@ module.exports = {
       }
     }
   },
+  // 生产环境优化
+  future: {
+    hoverOnlyWhenSupported: true, // 只在支持 hover 的设备上启用
+  },
+  // 精确模式：移除所有未使用的类
+  safelist: [],
+  // 不生成未使用的变体
+  corePlugins: {
+    preflight: true,
+    // 按需禁用不需要的功能
+    float: false,
+    clear: false,
+    skew: false,
+    caretColor: false,
+    sepia: false,
+  },
   plugins: []
 };

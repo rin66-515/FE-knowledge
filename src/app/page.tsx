@@ -1,10 +1,32 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { useCardStore } from '@/store/useCardStore';
+
+// 预加载下一页路由
+const prefetchRoutes = () => {
+  if (typeof window === 'undefined') return;
+  
+  // 延迟预加载，避免阻塞首屏
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(() => {
+      const router = (window as any).next?.router;
+      if (router) {
+        router.prefetch('/cards');
+        router.prefetch('/review');
+      }
+    });
+  }
+};
 
 export default function HomePage() {
   const locale = useCardStore(s => s.locale);
+  
+  // 预加载常用路由
+  useEffect(() => {
+    prefetchRoutes();
+  }, []);
 
   // 多语言文本
   const title = 'FE Knowledge Cards';
