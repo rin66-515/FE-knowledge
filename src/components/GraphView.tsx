@@ -81,13 +81,14 @@ export default function GraphView() {
     // 清空画布
     ctx.clearRect(0, 0, W, H);
     
-    // 渐进式绘制连接线
-    if (progress >= 0.3) {
-      const lineProgress = Math.min((progress - 0.3) / 0.3, 1);
-      ctx.strokeStyle = `rgba(59, 130, 246, ${0.4 * lineProgress})`;
+    // 渐进式绘制连接线 - 在前20%的时间内出现
+    if (progress > 0) {
+      const lineProgress = Math.min(progress / 0.2, 1); // 0-20%时间内从0到1
+      const opacity = 0.1 + (0.3 * lineProgress); // 从0.1渐变到0.4
+      ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
       ctx.lineWidth = 2;
-      ctx.shadowColor = `rgba(59, 130, 246, ${0.3 * lineProgress})`;
-      ctx.shadowBlur = 4;
+      ctx.shadowColor = `rgba(59, 130, 246, ${opacity * 0.75})`;
+      ctx.shadowBlur = 4 * lineProgress; // 阴影也渐显
 
       // 绘制连接线
       ctx.beginPath();
@@ -105,29 +106,33 @@ export default function GraphView() {
     // 重置阴影
     ctx.shadowBlur = 0;
 
-    // 渐进式绘制节点
+    // 渐进式绘制节点 - 每个节点依次出现
     nodes.forEach((node, index) => {
-      const nodeProgress = Math.max(0, Math.min((progress - index * 0.15) / 0.15, 1));
+      // 计算每个节点的出现进度：前20%时间用于连接线，后80%用于节点
+      const nodeStartProgress = 0.2 + (index * 0.16); // 每个节点间隔16%的总时间
+      const nodeProgress = Math.max(0, Math.min((progress - nodeStartProgress) / 0.16, 1));
+      
       if (nodeProgress <= 0) return;
 
       const radius = W < 600 ? 12 : 16;
       const fontSize = W < 600 ? 10 : 12;
       
-      // 节点背景（带缩放动画）
+      // 节点背景（带缩放动画和颜色渐变）
       const animatedRadius = radius * nodeProgress;
-      ctx.fillStyle = `rgba(59, 130, 246, ${0.9 * nodeProgress})`;
+      const opacity = 0.2 + (0.7 * nodeProgress); // 从0.2渐变到0.9
+      ctx.fillStyle = `rgba(59, 130, 246, ${opacity})`;
       ctx.beginPath();
       ctx.arc(node.x, node.y, animatedRadius, 0, Math.PI * 2);
       ctx.fill();
 
-      // 节点边框
-      ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 * nodeProgress})`;
+      // 节点边框（也带透明度渐变）
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 + 0.2 * nodeProgress})`; // 从0.1到0.3
       ctx.lineWidth = 1;
       ctx.stroke();
 
-      // 节点标签（淡入效果）
-      if (nodeProgress > 0.5) {
-        const labelProgress = (nodeProgress - 0.5) / 0.5;
+      // 节点标签（淡入效果）- 节点出现到一半时开始显示文字
+      if (nodeProgress > 0.4) {
+        const labelProgress = (nodeProgress - 0.4) / 0.6; // 从40%到100%渐显
         ctx.fillStyle = `rgba(255, 255, 255, ${labelProgress})`;
         ctx.font = `${fontSize}px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial`;
         ctx.textAlign = 'center';
@@ -173,14 +178,16 @@ export default function GraphView() {
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+      const rawProgress = Math.min(elapsed / duration, 1);
 
       // 使用更平滑的缓动函数
-      const easeOutQuad = 1 - Math.pow(1 - progress, 2);
-      setRenderProgress(easeOutQuad);
-      drawGraph(easeOutQuad);
+      const easedProgress = 1 - Math.pow(1 - rawProgress, 2);
+      
+      // 更新进度状态和绘制图形
+      setRenderProgress(easedProgress);
+      drawGraph(easedProgress); // 传递缓动后的进度值
 
-      if (progress < 1) {
+      if (rawProgress < 1) {
         animationFrameRef.current = requestAnimationFrame(animate);
       } else {
         setIsRendering(false);

@@ -18,7 +18,7 @@ interface Actions {
 }
 
 export const useCardStore = create<State & Actions>((set, get) => ({
-  locale: 'zh',
+  locale: 'ja',
   cards: [],
   favorites: new Set(),
   reviewed: {},

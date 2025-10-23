@@ -5,8 +5,8 @@ import type { ReactNode } from 'react';
 import { rehydrateLocal } from '@/store/useCardStore';
 
 export const metadata = {
-  title: 'Knowledge Cards - 知识卡片',
-  description: 'Multilingual knowledge cards system with spaced repetition',
+  title: 'ナレッジカード - Knowledge Cards',
+  description: '間隔反復学習システムを備えた多言語ナレッジカードシステム',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     rehydrateLocal();
   }
   return (
-    <html lang="zh">
+    <html lang="ja">
       <head>
         {/* 预连接到外部资源 */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
