@@ -7,10 +7,25 @@
   --card: #0f172a;
   --muted: #94a3b8;
 }
+
+/* 字体优化 - 使用系统字体栈 */
 html, body {
   height: 100%;
   background: linear-gradient(180deg, #0b1220 0%, #0d1630 100%);
   color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans JP', 'Noto Sans SC', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 针对不同语言优化字体 */
+:lang(ja) {
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif;
+}
+
+:lang(zh) {
+  font-family: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'SimHei', sans-serif;
 }
 a { @apply text-brand-300 hover:text-brand-200; }
 .container { @apply max-w-6xl mx-auto px-4; }
@@ -18,7 +33,19 @@ a { @apply text-brand-300 hover:text-brand-200; }
   @apply rounded-2xl p-5 shadow-lg bg-slate-900/70 border border-slate-800;
 }
 .btn {
-  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-brand-600 hover:bg-brand-700 transition;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-2.5 font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-600/20 hover:shadow-brand-500/30 hover:scale-105 active:scale-95;
+}
+
+.btn-secondary {
+  @apply bg-green-600 hover:bg-green-500 text-white shadow-lg shadow-green-600/20 hover:shadow-green-500/30 hover:scale-105 active:scale-95;
+}
+
+.btn-outline {
+  @apply border-2 border-slate-600 hover:border-brand-500 text-slate-300 hover:text-brand-400 hover:bg-slate-800/50 active:scale-95;
 }
 .chip {
   @apply text-xs px-2 py-1 rounded-full bg-slate-800 border border-slate-700;
@@ -92,6 +119,31 @@ a { @apply text-brand-300 hover:text-brand-200; }
 /* 快速进入 - 用于频繁出现的元素 */
 .quick-enter {
   animation: smoothEnter 0.25s ease-out both;
+}
+
+/* 图片懒加载优化 */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* 减少布局偏移 */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 性能优化：避免布局抖动 */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
 }
 
 /* 高DPI屏幕优化 */

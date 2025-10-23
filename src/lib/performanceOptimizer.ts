@@ -7,24 +7,43 @@
 export const preloadCriticalResources = () => {
   if (typeof window === 'undefined') return;
 
-  // 预加载字体
-  const fontPreload = document.createElement('link');
-  fontPreload.rel = 'preload';
-  fontPreload.as = 'font';
-  fontPreload.type = 'font/woff2';
-  fontPreload.crossOrigin = 'anonymous';
+  // 预连接到外部资源（DNS 预解析）
+  const domains = [
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com'
+  ];
 
-  // 预连接到外部资源
-  const preconnect = document.createElement('link');
-  preconnect.rel = 'preconnect';
-  preconnect.href = 'https://fonts.googleapis.com';
+  domains.forEach(domain => {
+    const preconnect = document.createElement('link');
+    preconnect.rel = 'preconnect';
+    preconnect.href = domain;
+    preconnect.crossOrigin = 'anonymous';
+    document.head.appendChild(preconnect);
+  });
 
-  document.head.appendChild(preconnect);
+  // 预加载关键数据文件
+  const dataPreload = document.createElement('link');
+  dataPreload.rel = 'preload';
+  dataPreload.as = 'fetch';
+  dataPreload.href = '/cards/all.json';
+  dataPreload.crossOrigin = 'anonymous';
+  document.head.appendChild(dataPreload);
+
+  console.log('🚀 Critical resources preloaded');
 };
 
 // 懒加载图片
 export const lazyLoadImages = () => {
   if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+    // 降级：直接加载所有图片
+    document.querySelectorAll('img[data-src]').forEach((img) => {
+      const element = img as HTMLImageElement;
+      const src = element.dataset.src;
+      if (src) {
+        element.src = src;
+        element.removeAttribute('data-src');
+      }
+    });
     return;
   }
 
@@ -34,19 +53,28 @@ export const lazyLoadImages = () => {
         const img = entry.target as HTMLImageElement;
         const src = img.dataset.src;
         if (src) {
-          img.src = src;
-          img.removeAttribute('data-src');
+          // 创建临时图片对象预加载
+          const tempImg = new Image();
+          tempImg.onload = () => {
+            img.src = src;
+            img.classList.add('loaded');
+            img.removeAttribute('data-src');
+          };
+          tempImg.src = src;
           imageObserver.unobserve(img);
         }
       }
     });
   }, {
-    rootMargin: '50px',
+    rootMargin: '100px', // 提前 100px 开始加载
+    threshold: 0.01
   });
 
   document.querySelectorAll('img[data-src]').forEach((img) => {
     imageObserver.observe(img);
   });
+  
+  console.log('🖼️ Image lazy loading initialized');
 };
 
 // 预加载下一页内容

@@ -8,6 +8,7 @@ import {
   getNetworkQuality,
   isLowEndDevice 
 } from '@/lib/performanceOptimizer';
+import { preloadCards } from '@/lib/dataLoader';
 
 /**
  * 性能监控组件
@@ -20,6 +21,9 @@ export default function PerformanceMonitor() {
 
     // 预加载关键资源
     preloadCriticalResources();
+    
+    // 预加载卡片数据（在空闲时）
+    preloadCards();
 
     // 检测设备和网络状况
     const networkQuality = getNetworkQuality();
