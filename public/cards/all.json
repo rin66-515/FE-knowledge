@@ -1,0 +1,83 @@
+{
+  "cards": [
+    {
+      "id": "db-001",
+      "category": "database",
+      "tags": [
+        "ACID",
+        "transaction"
+      ],
+      "zh": {
+        "question": "事务的 ACID 特性是什么？",
+        "answer": "原子性、一致性、隔离性、持久性。"
+      },
+      "ja": {
+        "question": "トランザクションの ACID 特性は？",
+        "answer": "原子性・一貫性・分離性・永続性。"
+      },
+      "en": {
+        "question": "What are the ACID properties of a transaction?",
+        "answer": "Atomicity, Consistency, Isolation, Durability."
+      }
+    },
+    {
+      "id": "net-001",
+      "category": "network",
+      "tags": [
+        "TCP/IP",
+        "OSI"
+      ],
+      "zh": {
+        "question": "TCP 与 UDP 的主要区别是什么？",
+        "answer": "TCP 面向连接、可靠传输；UDP 无连接、尽力而为。"
+      },
+      "ja": {
+        "question": "TCP と UDP の主な違いは？",
+        "answer": "TCP はコネクション型・信頼性あり、UDP はコネクションレス・ベストエフォート。"
+      },
+      "en": {
+        "question": "What is the key difference between TCP and UDP?",
+        "answer": "TCP is connection-oriented and reliable; UDP is connectionless and best-effort."
+      }
+    },
+    {
+      "id": "algo-001",
+      "category": "algorithm",
+      "tags": [
+        "complexity"
+      ],
+      "zh": {
+        "question": "时间复杂度 O(log n) 的典型算法是什么？",
+        "answer": "二分查找（Binary Search）。"
+      },
+      "ja": {
+        "question": "時間計算量 O(log n) の典型的なアルゴリズムは？",
+        "answer": "二分探索（Binary Search）。"
+      },
+      "en": {
+        "question": "Name an algorithm with time complexity O(log n).",
+        "answer": "Binary search."
+      }
+    },
+    {
+      "id": "pm-001",
+      "category": "project",
+      "tags": [
+        "PERT",
+        "WBS"
+      ],
+      "zh": {
+        "question": "PERT 图主要用于什么？",
+        "answer": "项目进度计划与关键路径分析。"
+      },
+      "ja": {
+        "question": "PERT 図は主に何に使われますか？",
+        "answer": "プロジェクトスケジュールとクリティカルパス分析。"
+      },
+      "en": {
+        "question": "What is PERT used for?",
+        "answer": "Project scheduling and critical path analysis."
+      }
+    }
+  ]
+}

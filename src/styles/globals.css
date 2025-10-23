@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b1220;
+  --card: #0f172a;
+  --muted: #94a3b8;
+}
+html, body {
+  height: 100%;
+  background: linear-gradient(180deg, #0b1220 0%, #0d1630 100%);
+  color: white;
+}
+a { @apply text-brand-300 hover:text-brand-200; }
+.container { @apply max-w-6xl mx-auto px-4; }
+.card {
+  @apply rounded-2xl p-5 shadow-lg bg-slate-900/70 border border-slate-800;
+}
+.btn {
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-brand-600 hover:bg-brand-700 transition;
+}
+.chip {
+  @apply text-xs px-2 py-1 rounded-full bg-slate-800 border border-slate-700;
+}
+
+/* 响应式图形容器 */
+.graph-container {
+  @apply relative w-full;
+  min-height: 200px;
+}
+
+/* 响应式文本 */
+.responsive-text {
+  @apply text-sm sm:text-base;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .graph-container {
+    min-height: 180px;
+  }
+  
+  .card {
+    @apply p-4;
+  }
+}
+
+/* 平板端优化 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .graph-container {
+    min-height: 250px;
+  }
+}
+
+/* 桌面端优化 */
+@media (min-width: 1024px) {
+  .graph-container {
+    min-height: 300px;
+  }
+}
+
+/* 加载动画优化 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 高DPI屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .graph-container canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* 骨架屏加载动画 */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes skeleton-line-draw {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.skeleton-graph {
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(30, 41, 59, 0.8) 50%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-node {
+  @apply w-8 h-8 rounded-full;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.3),
+    rgba(99, 102, 241, 0.5)
+  );
+  animation: pulse-glow 1.5s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.skeleton-line {
+  stroke: rgba(59, 130, 246, 0.2);
+  stroke-dasharray: 10;
+  animation: skeleton-line-draw 2s ease-in-out infinite;
+}
+
+/* 动画延迟类 */
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+/* 进度条动画 */
+@keyframes progress-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+  }
+}
+
+/* 优化的渐变背景 */
+.gradient-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* 懒加载优化 */
+.lazy-load {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}
+
+/* 性能提示 */
+.will-change-transform {
+  will-change: transform, opacity;
+}
+
+/* 移动端骨架屏优化 */
+@media (max-width: 768px) {
+  .skeleton-node {
+    @apply w-6 h-6;
+  }
+  
+  .skeleton-graph {
+    padding: 1rem;
+  }
+}
