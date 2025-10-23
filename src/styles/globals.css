@@ -60,14 +60,38 @@ a { @apply text-brand-300 hover:text-brand-200; }
   }
 }
 
-/* 加载动画优化 - 简单淡入 */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* 平滑进入效果 - 轻微移动 + 淡入 */
+.smooth-enter {
+  animation: smoothEnter 0.4s ease-out both;
 }
 
-.fade-in {
-  animation: fadeIn 0.3s ease-out;
+@keyframes smoothEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 延迟进入效果 */
+.enter-delay-1 {
+  animation: smoothEnter 0.4s ease-out 0.05s both;
+}
+
+.enter-delay-2 {
+  animation: smoothEnter 0.4s ease-out 0.1s both;
+}
+
+.enter-delay-3 {
+  animation: smoothEnter 0.4s ease-out 0.15s both;
+}
+
+/* 快速进入 - 用于频繁出现的元素 */
+.quick-enter {
+  animation: smoothEnter 0.25s ease-out both;
 }
 
 /* 高DPI屏幕优化 */
@@ -411,19 +435,21 @@ a { @apply text-brand-300 hover:text-brand-200; }
   @apply h-10 flex-1 bg-slate-700 rounded-xl;
 }
 
-/* 交错加载动画 - 简单淡入 */
+/* 交错加载动画 - 平滑进入 */
 @keyframes staggerFadeIn {
   from {
     opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .stagger-item {
   opacity: 0;
-  animation: staggerFadeIn 0.3s ease-out forwards;
+  animation: staggerFadeIn 0.4s ease-out forwards;
 }
 
 /* 动态延迟类生成 */

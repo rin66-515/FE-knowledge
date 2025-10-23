@@ -112,7 +112,7 @@ export default function ReviewPage() {
 
   return (
     <div className="grid gap-6">
-      <div>
+      <div className="smooth-enter">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent">
           {title}
         </h1>
@@ -122,13 +122,13 @@ export default function ReviewPage() {
       </div>
 
       {/* 复习统计 */}
-      <div>
+      <div className="enter-delay-1">
         <ReviewStats />
       </div>
 
       {/* 进度指示器 */}
       {!loading && due.length > 0 && (
-        <div className="card">
+        <div className="card enter-delay-2">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-slate-400">{progressLabel}</span>
             <span className="text-sm font-semibold text-brand-400">

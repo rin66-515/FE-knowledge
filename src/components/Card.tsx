@@ -75,9 +75,10 @@ export default function CardView({ card, index = 0 }: { card: Card; index?: numb
   return (
     <div 
       ref={cardRef}
-      className="card-flip-container"
+      className="card-flip-container smooth-enter"
       style={{ 
         perspective: '1000px',
+        animationDelay: `${Math.min(index * 0.03, 0.3)}s`,
       }}
     >
       <div className={`card-flip-inner ${flipped ? 'flipped' : ''} ${isFlipping ? 'flipping' : ''}`}>

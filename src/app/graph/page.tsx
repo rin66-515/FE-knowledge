@@ -32,7 +32,7 @@ const GraphView = dynamic(() => import('@/components/GraphView'), {
 export default function GraphPage() {
   return (
     <div className="grid gap-4">
-      <h1 className="text-2xl font-semibold">Knowledge Graph</h1>
+      <h1 className="text-2xl font-semibold smooth-enter">Knowledge Graph</h1>
       <Suspense fallback={
         <div className="card animate-pulse">
           <div className="h-8 w-48 bg-slate-700 rounded mb-4"></div>
