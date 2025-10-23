@@ -21,6 +21,7 @@ export default function GraphView() {
   const animationFrameRef = useRef<number>();
   const reduceMotion = useRef(false);
   const isLowEnd = useRef(false);
+  const hasAnimated = useRef(false); // 追踪是否已经执行过动画
 
   // 防抖函数，优化重绘性能
   const debounce = useCallback((func: Function, wait: number) => {
@@ -144,8 +145,15 @@ export default function GraphView() {
     });
   }, [dimensions]);
 
-  // 动画渲染控制
+  // 动画渲染控制 - 只执行一次
   const animateRender = useCallback(() => {
+    // 如果已经执行过动画，直接绘制完成状态
+    if (hasAnimated.current) {
+      drawGraph(1);
+      setRenderProgress(1);
+      return;
+    }
+
     markPerformance('graph-render-start');
     
     // 如果用户偏好减少动画或低端设备，直接渲染完成状态
@@ -153,28 +161,30 @@ export default function GraphView() {
       drawGraph(1);
       setRenderProgress(1);
       setIsRendering(false);
+      hasAnimated.current = true;
       markPerformance('graph-render-end');
       measurePerformance('graph-render', 'graph-render-start', 'graph-render-end');
       return;
     }
 
     let startTime: number | null = null;
-    const duration = isLowEnd.current ? 600 : 1200; // 低端设备缩短动画时间
+    const duration = 3500; // 放慢到 3.5 秒
 
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      // 使用缓动函数
-      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      setRenderProgress(easeOutCubic);
-      drawGraph(easeOutCubic);
+      // 使用更平滑的缓动函数
+      const easeOutQuad = 1 - Math.pow(1 - progress, 2);
+      setRenderProgress(easeOutQuad);
+      drawGraph(easeOutQuad);
 
       if (progress < 1) {
         animationFrameRef.current = requestAnimationFrame(animate);
       } else {
         setIsRendering(false);
+        hasAnimated.current = true; // 标记为已执行
         markPerformance('graph-render-end');
         measurePerformance('graph-render', 'graph-render-start', 'graph-render-end');
       }
@@ -236,15 +246,15 @@ export default function GraphView() {
 
   // 绘制图形（带动画）
   useEffect(() => {
-    if (isLoaded && dimensions.width > 0 && !isRendering) {
+    if (isLoaded && dimensions.width > 0) {
       // 取消之前的动画
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      // 启动渐进式渲染动画
+      // 启动渐进式渲染动画（内部会检查是否已执行过）
       animateRender();
     }
-  }, [isLoaded, dimensions, isRendering, animateRender]);
+  }, [isLoaded, dimensions, animateRender]);
 
   // 三语文本
   const title = {
