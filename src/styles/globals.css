@@ -196,3 +196,266 @@ a { @apply text-brand-300 hover:text-brand-200; }
     padding: 1rem;
   }
 }
+
+/* ============================================
+   卡片翻转动画和缓加载效果
+   ============================================ */
+
+/* 卡片容器 - 3D透视 */
+.card-flip-container {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* 卡片内部容器 - 翻转效果 */
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* 翻转状态 */
+.card-flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+/* 翻转中添加阴影效果 */
+.card-flip-inner.flipping {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* 卡片面 - 通用样式 */
+.card-flip-face {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* 卡片正面 */
+.card-flip-front {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+/* 卡片背面 */
+.card-flip-back {
+  transform: rotateY(180deg);
+  @apply bg-slate-900/80;
+}
+
+/* 卡片可见性动画 - 缓加载效果 */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-hidden {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.card-visible {
+  animation: cardSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 按钮增强样式 */
+.btn-primary {
+  @apply bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600;
+  @apply shadow-lg hover:shadow-xl transition-all duration-200;
+  @apply transform hover:scale-105 active:scale-95;
+}
+
+.btn-secondary {
+  @apply bg-slate-700 hover:bg-slate-600;
+  @apply transition-all duration-200;
+  @apply transform hover:scale-110 active:scale-95;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white;
+  @apply transition-all duration-200;
+  @apply transform hover:scale-105 active:scale-95;
+}
+
+.btn-warning {
+  @apply bg-yellow-600 hover:bg-yellow-700 text-white;
+  @apply transition-all duration-200;
+  @apply transform hover:scale-105 active:scale-95;
+}
+
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white;
+  @apply transition-all duration-200;
+  @apply transform hover:scale-105 active:scale-95;
+}
+
+.btn-icon {
+  @apply inline-block transition-transform duration-200;
+}
+
+.btn:hover .btn-icon {
+  transform: rotate(15deg);
+}
+
+.btn-primary:disabled,
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+  transform: none !important;
+}
+
+/* 芯片标签增强 */
+.chip-category {
+  @apply bg-brand-600/30 border-brand-500/50 text-brand-200;
+  @apply font-semibold;
+}
+
+.chip-tag {
+  @apply bg-slate-700/50 border-slate-600/50;
+  @apply hover:bg-slate-600/50 transition-colors;
+}
+
+/* 收藏星标动画 */
+@keyframes bounceSubtle {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 2s ease-in-out infinite;
+}
+
+/* 卡片内容区域 */
+.card-content {
+  @apply text-base leading-relaxed;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* 自定义滚动条 */
+.card-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-content::-webkit-scrollbar-track {
+  @apply bg-slate-800 rounded;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+  @apply bg-slate-600 rounded;
+}
+
+.card-content::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500;
+}
+
+/* 卡片悬停效果增强 */
+.card-flip-container:hover {
+  transform: translateY(-4px);
+}
+
+.card-flip-container:hover .card {
+  @apply shadow-2xl border-brand-700/50;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .card-flip-container {
+    min-height: 320px;
+  }
+  
+  .card-content {
+    max-height: 150px;
+    font-size: 0.875rem;
+  }
+  
+  .btn {
+    @apply text-sm px-3 py-1.5;
+  }
+}
+
+/* 加载骨架屏 - 卡片版 */
+.card-skeleton {
+  @apply card animate-pulse;
+  min-height: 280px;
+}
+
+.card-skeleton-header {
+  @apply h-6 w-32 bg-slate-700 rounded mb-4;
+}
+
+.card-skeleton-title {
+  @apply h-8 w-48 bg-slate-700 rounded mb-3;
+}
+
+.card-skeleton-content {
+  @apply space-y-2;
+}
+
+.card-skeleton-line {
+  @apply h-4 bg-slate-700 rounded;
+}
+
+.card-skeleton-line:nth-child(1) {
+  width: 100%;
+}
+
+.card-skeleton-line:nth-child(2) {
+  width: 95%;
+}
+
+.card-skeleton-line:nth-child(3) {
+  width: 85%;
+}
+
+.card-skeleton-buttons {
+  @apply mt-6 flex gap-2;
+}
+
+.card-skeleton-button {
+  @apply h-10 flex-1 bg-slate-700 rounded-xl;
+}
+
+/* 交错加载动画 */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-item {
+  opacity: 0;
+  animation: staggerFadeIn 0.5s ease-out forwards;
+}
+
+/* 动态延迟类生成 */
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 80ms; }
+.stagger-item:nth-child(3) { animation-delay: 160ms; }
+.stagger-item:nth-child(4) { animation-delay: 240ms; }
+.stagger-item:nth-child(5) { animation-delay: 320ms; }
+.stagger-item:nth-child(6) { animation-delay: 400ms; }
+.stagger-item:nth-child(7) { animation-delay: 480ms; }
+.stagger-item:nth-child(8) { animation-delay: 560ms; }
+.stagger-item:nth-child(9) { animation-delay: 640ms; }
+.stagger-item:nth-child(10) { animation-delay: 720ms; }

@@ -1,11 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCardStore } from '@/store/useCardStore';
 import type { Card } from '@/types/card';
 
-export default function CardView({ card }: { card: Card }) {
+export default function CardView({ card, index = 0 }: { card: Card; index?: number }) {
   const [flipped, setFlipped] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
   const locale = useCardStore(s => s.locale);
   const toggleFavorite = useCardStore(s => s.toggleFavorite);
   const favorites = useCardStore(s => s.favorites);
@@ -14,27 +18,163 @@ export default function CardView({ card }: { card: Card }) {
   const loc = card[locale];
   const fav = favorites.has(card.id);
 
+  // 可见性检测 - 缓加载效果
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            // 延迟显示，创建交错动画效果
+            setTimeout(() => {
+              setIsVisible(true);
+            }, index * 80); // 每个卡片延迟80ms
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, [index, isVisible]);
+
+  // 翻转处理
+  const handleFlip = () => {
+    if (isFlipping) return;
+    setIsFlipping(true);
+    setFlipped(v => !v);
+    
+    // 动画完成后重置状态
+    setTimeout(() => {
+      setIsFlipping(false);
+    }, 600);
+  };
+
   return (
-    <div className="card relative overflow-hidden">
-      <div className="absolute right-3 top-3 flex gap-2">
-        <span className="chip">{card.category}</span>
-        {card.tags?.map(t => <span key={t} className="chip">{t}</span>)}
-      </div>
-      <div className="mt-2">
-        <div className="text-sm text-slate-300 mb-2">#{card.id}</div>
-        <div className="text-lg font-semibold">{flipped ? 'Answer / 解答 / 回答' : 'Question / 题面 / 問題'}</div>
-        <p className="mt-2 text-slate-200">{flipped ? loc.answer : loc.question}</p>
-      </div>
-      <div className="mt-4 flex items-center gap-2">
-        <button className="btn" onClick={() => setFlipped(v => !v)}>
-          {flipped ? 'Show Question' : 'Show Answer'}
-        </button>
-        <button className="btn" onClick={() => toggleFavorite(card.id)}>
-          {fav ? '★ Favorited' : '☆ Favorite'}
-        </button>
-        <button className="btn" onClick={() => markReviewed(card.id, 3)}>Mark Easy</button>
-        <button className="btn" onClick={() => markReviewed(card.id, 2)}>Mark Good</button>
-        <button className="btn" onClick={() => markReviewed(card.id, 1)}>Mark Hard</button>
+    <div 
+      ref={cardRef}
+      className={`card-flip-container ${isVisible ? 'card-visible' : 'card-hidden'}`}
+      style={{ 
+        animationDelay: `${index * 80}ms`,
+        perspective: '1000px',
+      }}
+    >
+      <div className={`card-flip-inner ${flipped ? 'flipped' : ''} ${isFlipping ? 'flipping' : ''}`}>
+        {/* 卡片前面 - 问题 */}
+        <div className="card card-flip-face card-flip-front relative overflow-hidden">
+          {/* 标签区域 */}
+          <div className="absolute right-3 top-3 flex gap-2 flex-wrap justify-end z-10">
+            <span className="chip chip-category">{card.category}</span>
+            {card.tags?.map(t => (
+              <span key={t} className="chip chip-tag">{t}</span>
+            ))}
+          </div>
+
+          {/* 收藏标记 */}
+          {fav && (
+            <div className="absolute left-3 top-3 text-yellow-400 text-xl z-10 animate-bounce-subtle">
+              ★
+            </div>
+          )}
+
+          {/* 内容区域 */}
+          <div className="mt-2 pt-8">
+            <div className="text-sm text-slate-400 mb-3 font-mono">#{card.id}</div>
+            <div className="text-lg font-semibold mb-4 text-brand-300 flex items-center gap-2">
+              <span className="text-2xl">❓</span>
+              <span>Question / 题面 / 問題</span>
+            </div>
+            <div className="card-content text-slate-200 min-h-[80px] leading-relaxed">
+              {loc.question}
+            </div>
+          </div>
+
+          {/* 操作按钮 */}
+          <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <button 
+              className="btn btn-primary flex-1" 
+              onClick={handleFlip}
+              disabled={isFlipping}
+            >
+              <span className="btn-icon">🔄</span>
+              <span>Show Answer</span>
+            </button>
+            <button 
+              className="btn btn-secondary" 
+              onClick={() => toggleFavorite(card.id)}
+            >
+              <span className="text-lg">{fav ? '★' : '☆'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 卡片背面 - 答案 */}
+        <div className="card card-flip-face card-flip-back relative overflow-hidden">
+          {/* 标签区域 */}
+          <div className="absolute right-3 top-3 flex gap-2 flex-wrap justify-end z-10">
+            <span className="chip chip-category">{card.category}</span>
+            {card.tags?.map(t => (
+              <span key={t} className="chip chip-tag">{t}</span>
+            ))}
+          </div>
+
+          {/* 收藏标记 */}
+          {fav && (
+            <div className="absolute left-3 top-3 text-yellow-400 text-xl z-10">
+              ★
+            </div>
+          )}
+
+          {/* 内容区域 */}
+          <div className="mt-2 pt-8">
+            <div className="text-sm text-slate-400 mb-3 font-mono">#{card.id}</div>
+            <div className="text-lg font-semibold mb-4 text-green-400 flex items-center gap-2">
+              <span className="text-2xl">✅</span>
+              <span>Answer / 解答 / 回答</span>
+            </div>
+            <div className="card-content text-slate-200 min-h-[80px] leading-relaxed">
+              {loc.answer}
+            </div>
+          </div>
+
+          {/* 操作按钮 */}
+          <div className="mt-6 space-y-2">
+            <button 
+              className="btn btn-primary w-full" 
+              onClick={handleFlip}
+              disabled={isFlipping}
+            >
+              <span className="btn-icon">🔄</span>
+              <span>Show Question</span>
+            </button>
+            
+            <div className="grid grid-cols-3 gap-2">
+              <button 
+                className="btn btn-success text-sm" 
+                onClick={() => markReviewed(card.id, 3)}
+                title="Easy - 5 days"
+              >
+                😊 Easy
+              </button>
+              <button 
+                className="btn btn-warning text-sm" 
+                onClick={() => markReviewed(card.id, 2)}
+                title="Good - 3 days"
+              >
+                😐 Good
+              </button>
+              <button 
+                className="btn btn-danger text-sm" 
+                onClick={() => markReviewed(card.id, 1)}
+                title="Hard - 1 day"
+              >
+                😓 Hard
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
