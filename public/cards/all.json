@@ -3,10 +3,7 @@
     {
       "id": "db-001",
       "category": "database",
-      "tags": [
-        "ACID",
-        "transaction"
-      ],
+      "tags": ["ACID", "transaction"],
       "zh": {
         "question": "事务的 ACID 特性是什么？",
         "answer": "原子性、一致性、隔离性、持久性。"
@@ -21,12 +18,26 @@
       }
     },
     {
+      "id": "data-001",
+      "category": "data",
+      "tags": ["binary", "decimal", "hex", "conversion"],
+      "zh": {
+        "question": "10进数 7 ÷ 32 的结果用二进制表示是哪一个？\nA、0.001011  B、0.001011 C、0.00111 D、0.0111",
+        "answer": "7/32 = 0.21875，二进制为 0.00111，因此选 ウ。"
+      },
+      "ja": {
+        "question": "7 ÷ 32 の結果を2進数で表したものはどれか。\nア、0.001011  B、0.001011  C、0.00111  D、0.0111",
+        "answer": "7/32 = 0.21875、2進数は 0.00111 なので。"
+      },
+      "en": {
+        "question": "Which is the binary representation of 7 ÷ 32 in decimal?\nA、0.001011  B、0.001011 C、0.00111 D、0.0111",
+        "answer": "7/32 = 0.21875. In binary it is 0.00111, so the correct choice is C."
+      }
+    },
+    {
       "id": "net-001",
       "category": "network",
-      "tags": [
-        "TCP/IP",
-        "OSI"
-      ],
+      "tags": ["TCP/IP", "OSI"],
       "zh": {
         "question": "TCP 与 UDP 的主要区别是什么？",
         "answer": "TCP 面向连接、可靠传输；UDP 无连接、尽力而为。"
@@ -43,9 +54,7 @@
     {
       "id": "algo-001",
       "category": "algorithm",
-      "tags": [
-        "complexity"
-      ],
+      "tags": ["complexity"],
       "zh": {
         "question": "时间复杂度 O(log n) 的典型算法是什么？",
         "answer": "二分查找（Binary Search）。"
@@ -62,10 +71,7 @@
     {
       "id": "pm-001",
       "category": "project",
-      "tags": [
-        "PERT",
-        "WBS"
-      ],
+      "tags": ["PERT", "WBS"],
       "zh": {
         "question": "PERT 图主要用于什么？",
         "answer": "项目进度计划与关键路径分析。"
