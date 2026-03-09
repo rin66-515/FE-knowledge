@@ -84,6 +84,108 @@
         "question": "What is PERT used for?",
         "answer": "Project scheduling and critical path analysis."
       }
+    },
+    {
+      "id": "data-002",
+      "category": "data",
+      "tags": ["bit", "binary", "pattern"],
+      "zh": {
+        "question": "32 位能表示的位模式数量是 24 位能表示数量的几倍？\n甲．8  乙．16  丙．128  丁．256",
+        "answer": "2^32 ÷ 2^24 = 2^8 = 256 倍。答案为丁。"
+      },
+      "ja": {
+        "question": "32ビットで表現できるビットパターンの個数は、24ビットで表現できる個数の何倍か。\nア．8  イ．16  ウ．128  エ．256",
+        "answer": "2^32 ÷ 2^24 = 2^8 = 256 倍。答はエ。"
+      },
+      "en": {
+        "question": "How many times is the number of bit patterns representable in 32 bits compared to 24 bits?\nA. 8  B. 16  C. 128  D. 256",
+        "answer": "2^32 / 2^24 = 2^8 = 256. Answer: D."
+      }
+    },
+    {
+      "id": "data-003",
+      "category": "data",
+      "tags": ["decimal", "binary", "fraction"],
+      "zh": {
+        "question": "下列十进制小数中，用二进制表示会变成无限小数的是哪一个？\n甲．0.05  乙．0.125  丙．0.375  丁．0.5",
+        "answer": "只有分母可表示为 2 的幂的分数在二进制下才是有限小数。0.05＝1/20 分母不是 2 的幂，故为无限小数。答案为甲。"
+      },
+      "ja": {
+        "question": "次の10進小数のうち、2進数で表すと無限小数になるものはどれか。\nア．0.05  イ．0.125  ウ．0.375  エ．0.5",
+        "answer": "分母が2の冪で表せるものだけ2進有限小数。0.05=1/20 は2の冪でないので無限小数。答はア。"
+      },
+      "en": {
+        "question": "Which of these decimal fractions becomes a repeating (infinite) binary fraction?\nA. 0.05  B. 0.125  C. 0.375  D. 0.5",
+        "answer": "Only fractions whose denominator is a power of 2 have finite binary form. 0.05 = 1/20 is not, so it becomes infinite in binary. Answer: A."
+      }
+    },
+    {
+      "id": "data-004",
+      "category": "data",
+      "tags": ["hex", "decimal", "fraction"],
+      "zh": {
+        "question": "十六进制小数 3A.5C 用十进制分数表示是下列哪一个？\n甲．939/16  乙．3735/64  丙．14939/256  丁．14941/256",
+        "answer": "3A.5C ＝ 58 ＋ 92/256 ＝ 14940/256 ＝ 3735/64。答案为乙。"
+      },
+      "ja": {
+        "question": "16進小数 3A.5C を10進数の分数で表したものはどれか。\nア．939/16  イ．3735/64  ウ．14939/256  エ．14941/256",
+        "answer": "3A.5C = 58 + 92/256 = 14940/256 = 3735/64。答はイ。"
+      },
+      "en": {
+        "question": "Which fraction in base 10 equals the hexadecimal 3A.5C?\nA. 939/16  B. 3735/64  C. 14939/256  D. 14941/256",
+        "answer": "3A.5C = 58 + 92/256 = 14940/256 = 3735/64. Answer: B."
+      }
+    },
+    {
+      "id": "data-005",
+      "category": "data",
+      "tags": ["decimal", "octal", "finite"],
+      "zh": {
+        "question": "下列十进制小数中，转换为八进制后为有限小数的是哪一个？\n甲．0.3  乙．0.4  丙．0.5  丁．0.8",
+        "answer": "在八进制下为有限小数仅当分母是 2 的幂。只有 0.5＝1/2 满足。答案为丙。"
+      },
+      "ja": {
+        "question": "次の10進小数のうち、8進数に変換したときに有限小数になるものはどれか。\nア．0.3  イ．0.4  ウ．0.5  エ．0.8",
+        "answer": "8進で有限小数になるのは分母が2の冪のときのみ。0.5=1/2 のみ該当。答はウ。"
+      },
+      "en": {
+        "question": "Which of these decimals becomes a finite octal fraction?\nA. 0.3  B. 0.4  C. 0.5  D. 0.8",
+        "answer": "Finite in base 8 only when the denominator is a power of 2. Only 0.5 = 1/2 qualifies. Answer: C."
+      }
+    },
+    {
+      "id": "data-006",
+      "category": "data",
+      "tags": ["radix", "conversion", "finite"],
+      "zh": {
+        "question": "关于进制转换，下列叙述中正确的是哪一项？\n甲．二进制的有限小数转换为十进制也一定是有限小数。\n乙．八进制的有限小数转换为二进制有时会变成无限小数。\n丙．八进制的有限小数转换为十进制有时会变成无限小数。\n丁．十进制的有限小数转换为八进制也一定是有限小数。",
+        "answer": "甲正确（二进制有限小数在十进制下也是有限小数）。丁错误（例如 0.1＝1/10 在八进制下为无限小数）。乙、丙也错误。答案为甲。"
+      },
+      "ja": {
+        "question": "基数変換に関する記述のうち、適切なものはどれか。\nア．2進数の有限小数は、10進数にしても必ず有限小数になる。\nイ．8進数の有限小数は、2進数にすると有限小数にならないこともある。\nウ．8進数の有限小数は、10進数にすると有限小数にならないこともある。\nエ．10進数の有限小数は、8進数にしても必ず有限小数になる。",
+        "answer": "アは正しい。エは誤り（0.1=1/10 などは8進では無限小数）。イ・ウも誤り。答はア。"
+      },
+      "en": {
+        "question": "Which statement about radix conversion is correct?\nA. A finite binary fraction is always finite in decimal.\nB. A finite octal fraction may become infinite in binary.\nC. A finite octal fraction may become infinite in decimal.\nD. A finite decimal fraction is always finite in octal.",
+        "answer": "A is correct. D is false (e.g. 0.1=1/10 is infinite in octal). B and C are false. Answer: A."
+      }
+    },
+    {
+      "id": "data-007",
+      "category": "data",
+      "tags": ["hex", "binary", "fraction"],
+      "zh": {
+        "question": "与十六进制小数 2A.4C 相等的是下列哪一项？\n甲．2⁵+2³+2¹+2⁻²+2⁻⁵+2⁻⁶  乙．2⁵+2³+2¹+2⁻¹+2⁻⁴+2⁻⁵\n丙．2⁶+2⁴+2²+2⁻²+2⁻⁵+2⁻⁶  丁．2⁶+2⁴+2²+2⁻¹+2⁻⁴+2⁻⁵",
+        "answer": "2A＝42＝2^5+2^3+2^1；.4C＝76/256，二进制为 0.010011，即 2⁻²+2⁻⁵+2⁻⁶。合起来为甲。"
+      },
+      "ja": {
+        "question": "16進小数 2A.4C と等しいものはどれか。\nア．2⁵+2³+2¹+2⁻²+2⁻⁵+2⁻⁶  イ．2⁵+2³+2¹+2⁻¹+2⁻⁴+2⁻⁵\nウ．2⁶+2⁴+2²+2⁻²+2⁻⁵+2⁻⁶  エ．2⁶+2⁴+2²+2⁻¹+2⁻⁴+2⁻⁵",
+        "answer": "2A=42=2^5+2^3+2^1。.4C=76/256、2進小数は0.010011で2⁻²+2⁻⁵+2⁻⁶。答はア。"
+      },
+      "en": {
+        "question": "Which expression equals the hexadecimal 2A.4C?\nA. 2⁵+2³+2¹+2⁻²+2⁻⁵+2⁻⁶  B. 2⁵+2³+2¹+2⁻¹+2⁻⁴+2⁻⁵\nC. 2⁶+2⁴+2²+2⁻²+2⁻⁵+2⁻⁶  D. 2⁶+2⁴+2²+2⁻¹+2⁻⁴+2⁻⁵",
+        "answer": "2A=42=2^5+2^3+2^1. .4C=76/256, binary 0.010011 = 2⁻²+2⁻⁵+2⁻⁶. Answer: A."
+      }
     }
   ]
 }
